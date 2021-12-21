@@ -1,16 +1,16 @@
 <template>
-  <hello-world />
+  <v-img
+    max-height="100vh"
+    max-width="100vw"
+    src="../assets/login-background.jpg"
+  >
+    <div>TESTE</div>
+  </v-img>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
-  import HelloWorld from '../components/HelloWorld.vue'
+import { Component, Vue } from "vue-property-decorator";
 
-  export default Vue.extend({
-    name: 'Home',
-
-    components: {
-      HelloWorld,
-    },
-  })
+@Component({})
+export default class HomeView extends Vue {}
 </script>
