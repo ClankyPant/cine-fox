@@ -28,16 +28,16 @@ const plugin = {
 
     vueInstance.prototype.$notify = {
       info: (text: string): void => {
-        commitStore(text, store);
+        commitStore(text, store, NotificationType.NOTHING);
       },
       success: (text: string): void => {
-        commitStore(text, store);
+        commitStore(text, store, NotificationType.SUCCESS);
       },
       error: (text: string) => {
-        commitStore(text, store);
+        commitStore(text, store, NotificationType.ERROR);
       },
       warning: (text: string) => {
-        commitStore(text, store);
+        commitStore(text, store, NotificationType.WARNING);
       },
       notifications: (): Array<NotificationModel> =>
         store.getters.getNotifications,
@@ -45,10 +45,10 @@ const plugin = {
   },
 };
 
-function commitStore(text: string, store: Store<unknown>): void {
+function commitStore(text: string, store: Store<unknown>, notificationType: NotificationType): void {
   store.commit(
     VuexCommitName.ADD_NOTIFICATION,
-    new NotificationModel(text, NotificationType.WARNING)
+    new NotificationModel(text, notificationType)
   );
 }
 

@@ -7,14 +7,14 @@
     <v-card-text>
       <v-row justify="center">
         <v-col cols="8">
-          <TextField label="Login" />
+          <TextField v-model="user" label="Login" />
         </v-col>
       </v-row>
     </v-card-text>
     <v-card-text>
       <v-row justify="center">
         <v-col cols="8">
-          <TextField type="password" label="Senha" />
+          <TextField v-model="password" type="password" label="Senha" />
         </v-col>
       </v-row>
     </v-card-text>
@@ -33,10 +33,16 @@ import TextField from "@/components/forms/TextField.vue";
 
 @Component({ components: { TextField, Button } })
 export default class Login extends Vue {
-  login(): void {
-    this.$notify.warning("Logado com sucesso!");
+  user = "";
+  password = "";
 
-    return;
+  login(): void {
+    if (this.user === "luis") {
+      this.$router.push("/about");
+      this.$notify.success("Logado com sucesso!");
+    } else {
+      this.$notify.error("Login não encontrado!");
+    }
   }
 }
 </script>
