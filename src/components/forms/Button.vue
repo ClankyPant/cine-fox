@@ -1,13 +1,18 @@
 <template>
-  <v-btn plain>{{ title }}</v-btn>
+  <v-btn @click="emit()" plain>{{ title }}</v-btn>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
 @Component({})
 export default class Button extends Vue {
   @Prop({ required: true })
   title!: string;
+
+  @Emit('onClickEvent')
+  emit(): void {
+    return;
+  }
 }
 </script>

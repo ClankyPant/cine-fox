@@ -5,13 +5,21 @@
       </v-img>
     </v-card-text>
     <v-card-text>
-      <TextField label="Login" />
+      <v-row justify="center">
+        <v-col cols="8">
+          <TextField label="Login" />
+        </v-col>
+      </v-row>
     </v-card-text>
     <v-card-text>
-      <TextField type="password" label="Senha" />
+      <v-row justify="center">
+        <v-col cols="8">
+          <TextField type="password" label="Senha" />
+        </v-col>
+      </v-row>
     </v-card-text>
     <v-card-actions>
-      <Button title="Entrar" />
+      <Button @onClickEvent="login()" title="Entrar" />
       <Button title="Registrar-se" />
     </v-card-actions>
   </v-card>
@@ -19,9 +27,16 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import TextField from "@/components/forms/TextField.vue";
+
 import Button from "@/components/forms/Button.vue";
+import TextField from "@/components/forms/TextField.vue";
 
 @Component({ components: { TextField, Button } })
-export default class Login extends Vue {}
+export default class Login extends Vue {
+  login(): void {
+    this.$notify.warning("Logado com sucesso!");
+
+    return;
+  }
+}
 </script>

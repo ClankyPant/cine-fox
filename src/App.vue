@@ -1,19 +1,17 @@
 <template>
   <v-app>
     <v-main>
-      <router-view/>
+      <router-view />
+      <Notification />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Notification from "@/components/notification/Notification.vue";
 
-export default Vue.extend({
-  name: 'App',
+import { Component, Vue } from "vue-property-decorator";
 
-  data: () => ({
-    //
-  }),
-});
+@Component({ components: { Notification } })
+export default class Login extends Vue {}
 </script>

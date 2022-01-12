@@ -1,15 +1,22 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import NotificationModel from "@/models/notification/NotificationModel";
+import StateModel from "@/models/store/StateModel";
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-  },
+  state: new StateModel(),
   mutations: {
+    addNotification(state: StateModel, notification: NotificationModel): void {
+      state.notifications.push(notification);
+    },
   },
-  actions: {
+  getters: {
+    getNotifications(state: StateModel): Array<NotificationModel> {
+      return state.notifications;
+    },
   },
-  modules: {
-  }
-})
+  actions: {},
+  modules: {},
+});
