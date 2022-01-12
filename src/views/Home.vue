@@ -5,7 +5,13 @@
     max-width="100vw"
     src="../assets/login-background.jpg"
   >
-    <Login />
+    <v-container fill-height>
+      <v-row justify="center">
+        <v-col cols="12" sm="6" md="6" lg="4">
+          <Login />
+        </v-col>
+      </v-row>
+    </v-container>
   </v-img>
 </template>
 
