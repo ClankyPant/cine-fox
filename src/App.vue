@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <AppBar />
     <v-main>
       <router-view />
       <Notification />
@@ -9,9 +10,10 @@
 
 <script lang="ts">
 import Notification from "@/components/notification/Notification.vue";
+import AppBar from "@/components/AppBar.vue";
 
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({ components: { Notification } })
+@Component({ components: { Notification, AppBar } })
 export default class Login extends Vue {}
 </script>

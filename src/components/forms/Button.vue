@@ -10,7 +10,7 @@ export default class Button extends Vue {
   @Prop({ required: true })
   title!: string;
 
-  @Emit('onClickEvent')
+  @Emit('click')
   emit(): void {
     return;
   }

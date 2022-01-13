@@ -19,7 +19,7 @@
       </v-row>
     </v-card-text>
     <v-card-actions>
-      <Button @onClickEvent="login()" title="Entrar" />
+      <Button @click="login()" title="Entrar" />
       <Button title="Registrar-se" />
     </v-card-actions>
   </v-card>
@@ -30,6 +30,7 @@ import { Component, Vue } from "vue-property-decorator";
 
 import Button from "@/components/forms/Button.vue";
 import TextField from "@/components/forms/TextField.vue";
+import { VuexCommitName } from "@/enums/VuexCommitName";
 
 @Component({ components: { TextField, Button } })
 export default class Login extends Vue {
@@ -37,6 +38,7 @@ export default class Login extends Vue {
   password = "";
 
   login(): void {
+    this.$store.commit(VuexCommitName.LOG_IN);
     if (this.user === "luis") {
       this.$router.push("/about");
       this.$notify.success("Logado com sucesso!");
