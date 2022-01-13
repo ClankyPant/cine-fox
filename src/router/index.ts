@@ -33,8 +33,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== "/" && store.state.loginStatus == false) {
+  if (to.path !== "/" && store.getters.isLoggedIn == false) {
     next("/");
+  }
+
+  console.log(store.state.loginStatus);
+  if (to.path === "/" && store.getters.isLoggedIn) {
+    next("/main");
   }
 
   next();
