@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import MainUser from "@/views/MainUser.vue";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,14 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.path !== "/" && store.state.loginStatus == false) {
+    next("/");
+  }
+
+  next();
 });
 
 export default router;

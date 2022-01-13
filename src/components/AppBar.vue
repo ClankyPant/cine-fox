@@ -1,12 +1,13 @@
 <template>
-  <v-app-bar v-if="showAppBar" dark color="primary">
-    <Button title="Inicio" class="mx-2" />
-    <Button title="Meus filmes" class="mx-2" />
+  <v-app-bar app v-if="showAppBar" dark color="primary">
+    <Button title="Inicio" />
+    <Button title="Loja" />
+    <Button title="Meus filmes" />
 
     <v-spacer></v-spacer>
 
-    <Button title="Conta" class="mx-2" />
-    <Button @click="logOff()" title="Sair" class="mx-2" />
+    <Button title="Conta" />
+    <Button @click="logOff()" title="Sair" />
   </v-app-bar>
 </template>
 
@@ -23,6 +24,7 @@ export default class AppBar extends Vue {
 
   logOff(): void {
     this.$store.commit(VuexCommitName.LOG_OFF);
+    this.$router.push("/");
   }
 }
 </script>

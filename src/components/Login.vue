@@ -38,9 +38,9 @@ export default class Login extends Vue {
   password = "";
 
   login(): void {
-    this.$store.commit(VuexCommitName.LOG_IN);
     if (this.user === "luis") {
-      this.$router.push("/about");
+      this.$store.commit(VuexCommitName.LOG_IN);
+      this.$router.push("/main");
       this.$notify.success("Logado com sucesso!");
     } else {
       this.$notify.error("Login não encontrado!");
