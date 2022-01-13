@@ -37,7 +37,6 @@ router.beforeEach((to, from, next) => {
     next("/");
   }
 
-  console.log(store.state.loginStatus);
   if (to.path === "/" && store.getters.isLoggedIn) {
     next("/main");
   }
