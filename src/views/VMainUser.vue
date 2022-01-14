@@ -6,5 +6,5 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
-export default class MainUser extends Vue {}
+export default class VMainUser extends Vue {}
 </script>

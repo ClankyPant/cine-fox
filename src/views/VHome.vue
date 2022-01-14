@@ -20,5 +20,5 @@ import { Component, Vue } from "vue-property-decorator";
 import CLoginSystem from "@/components/CLoginSystem.vue";
 
 @Component({ components: { CLoginSystem } })
-export default class HomeView extends Vue {}
+export default class VHomeView extends Vue {}
 </script>

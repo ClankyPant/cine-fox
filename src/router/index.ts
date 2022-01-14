@@ -1,8 +1,9 @@
 import Vue from "vue";
+import store from "@/store";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
-import MainUser from "@/views/MainUser.vue";
-import store from "../store";
+
+import VHomeView from "@/views/VHome.vue";
+import VMainUser from "@/views/VMainUser.vue";
 
 Vue.use(VueRouter);
 
@@ -10,7 +11,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "Página principal",
-    component: Home,
+    component: VHomeView,
   },
   {
     path: "/about",
@@ -24,7 +25,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/main",
     name: "",
-    component: MainUser,
+    component: VMainUser,
   },
 ];
 
