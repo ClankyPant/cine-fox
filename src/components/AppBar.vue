@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Button from "@/components/forms/Button.vue";
-import { VuexCommitName } from "@/enums/VuexCommitName";
+import { VuexCommitNameEnum } from "@/enums/Vuex";
 
 @Component({ components: { Button } })
 export default class AppBar extends Vue {
@@ -23,7 +23,7 @@ export default class AppBar extends Vue {
   }
 
   logOff(): void {
-    this.$store.commit(VuexCommitName.LOG_OFF);
+    this.$store.commit(VuexCommitNameEnum.LOG_OFF);
     this.$router.push("/");
   }
 }

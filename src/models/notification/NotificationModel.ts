@@ -1,11 +1,11 @@
-import { NotificationType } from "@/enums/NotificationType";
+import { NotificationTypeEnum } from "@/enums/Notification";
 
 export default class NotificationModel {
   message: string;
   active: boolean;
-  type: NotificationType;
+  type: NotificationTypeEnum;
 
-  constructor(message: string, notificationType = NotificationType.NOTHING) {
+  constructor(message: string, notificationType = NotificationTypeEnum.NOTHING) {
     this.message = message;
     this.active = true;
     this.type = notificationType;

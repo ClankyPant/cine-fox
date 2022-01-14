@@ -1,4 +1,4 @@
-import { LocalStorageItem } from "./../enums/LocalStorageItem";
+import { LocalStorageItemEnum } from "../enums/LocalStorage";
 import NotificationModel from "@/models/notification/NotificationModel";
 import StateModel from "@/models/store/StateModel";
 import Vue from "vue";
@@ -13,11 +13,11 @@ export default new Vuex.Store({
       state.notifications.push(notification);
     },
     logIn(state: StateModel): void {
-      localStorage.setItem(LocalStorageItem.API_KEY, "8129ndsajdnsua-dksnduias-jfjn");
+      localStorage.setItem(LocalStorageItemEnum.API_KEY, "8129ndsajdnsua-dksnduias-jfjn");
       state.loginStatus = true;
     },
     logOff(state: StateModel): void {
-      localStorage.removeItem(LocalStorageItem.API_KEY);
+      localStorage.removeItem(LocalStorageItemEnum.API_KEY);
       state.loginStatus = false;
     },
   },
@@ -26,7 +26,7 @@ export default new Vuex.Store({
       return state.notifications;
     },
     isLoggedIn(state: StateModel): boolean {
-      const apiKey = localStorage.getItem(LocalStorageItem.API_KEY);
+      const apiKey = localStorage.getItem(LocalStorageItemEnum.API_KEY);
 
       if (apiKey != null && apiKey.length > 0) {
         state.loginStatus = true;

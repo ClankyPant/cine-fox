@@ -28,7 +28,7 @@ import FireBaseService from "@/services/FireBase";
 
 import { Component, Vue } from "vue-property-decorator";
 
-import { VuexCommitName } from "@/enums/VuexCommitName";
+import { VuexCommitNameEnum } from "@/enums/Vuex";
 
 import Button from "@/components/forms/Button.vue";
 import TextField from "@/components/forms/TextField.vue";
@@ -61,7 +61,7 @@ export default class LoginSystem extends Vue {
 
     const token = result.data;
     if (token) {
-      this.$store.commit(VuexCommitName.LOG_IN);
+      this.$store.commit(VuexCommitNameEnum.LOG_IN);
       this.$notify.success("Logado com sucesso!");
 
       this.$router.push("/main");
