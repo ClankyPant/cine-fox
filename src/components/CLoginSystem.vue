@@ -24,7 +24,7 @@
 import { MUser } from "@/models/MUser";
 import { MResultRequest } from "@/models/MResultRequest";
 
-import FireBaseService from "@/services/FireBase";
+import { SFirebase } from "@/services/SFirebase";
 
 import { Component, Vue } from "vue-property-decorator";
 
@@ -74,7 +74,7 @@ export default class CLoginSystem extends Vue {
     if (this.showRegister == false) {
       this.showRegister = true;
     } else {
-      const fireBaseService = new FireBaseService();
+      const fireBaseService = new SFirebase();
       const resultRequest: MResultRequest<void> =
         await fireBaseService.createNewAccount(this.userRegistration);
 

@@ -11,7 +11,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import {MUser} from "@/models/MUser";
+import { MUser } from "@/models/MUser";
 import { MResultRequest } from "@/models/MResultRequest";
 import IUserCredential from "@/interface/IUserCredential";
 
@@ -25,7 +25,7 @@ const FIRE_BASE_CONFIG = {
   measurementId: "G-VB6D49T5E6",
 };
 
-export default class FireBaseService {
+export class SFirebase {
   fireBaseApp: FirebaseApp;
 
   constructor() {

@@ -1,7 +1,7 @@
 import { VueConstructor } from "vue";
 import { MUser } from "@/models/MUser";
 import { MResultRequest } from "@/models/MResultRequest";
-import FireBase from "@/services/FireBase";
+import { SFirebase } from "@/services/SFirebase";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -21,7 +21,7 @@ const plugin = {
   install: (vue: VueConstructor): void => {
     const vueInstance = vue;
 
-    vueInstance.prototype.$firebase = new FireBase();
+    vueInstance.prototype.$firebase = new SFirebase();
   },
 };
 
