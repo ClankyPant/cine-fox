@@ -3,12 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import notify from "@/plugins/notification";
-import firebase from "@/plugins/firebase";
+import PFirebase from "@/plugins/PFirebase";
+import PNotification from "@/plugins/PNotification";
 
 Vue.config.productionTip = false;
-Vue.use(notify, store);
-Vue.use(firebase);
+Vue.use(PNotification, store);
+Vue.use(PFirebase);
 
 new Vue({
   router,
