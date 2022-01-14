@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import UserModel from "@/models/UserModel";
 import ResultRequest from "@/models/RequestError";
+import IUserCredential from "@/interface/IUserCredential";
 
 const FIRE_BASE_CONFIG = {
   apiKey: "AIzaSyBiXUVteCVs-FLwJ639dN_9EuJX_CBOglw",
@@ -35,23 +36,25 @@ export default class FireBaseService {
     return getFirestore(this.fireBaseApp);
   }
 
-  async signIn(user: UserModel): Promise<ResultRequest<string>> {
+  async signIn(userParam: UserModel): Promise<ResultRequest<string>> {
     const result: ResultRequest<string> = new ResultRequest("");
 
     try {
-      const auth = getAuth();
-      const signResult = await signInWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password
+      const fireAuth = getAuth();
+      const fireUser = await signInWithEmailAndPassword(
+        fireAuth,
+        userParam.email,
+        userParam.password
       );
 
-      console.log(signResult);
+      const userCredencials: IUserCredential = JSON.parse(
+        JSON.stringify(fireUser)
+      );
       result.message = "Logado com sucesso!";
-      result.data = ["TOKEN"];
+      result.data = userCredencials.user.apiKey;
     } catch (error) {
-      const err = error as Error;
-      result.message = err.message;
+      const e = error as Error;
+      result.message = e.message;
       result.error = true;
     }
 

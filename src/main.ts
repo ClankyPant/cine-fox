@@ -4,9 +4,11 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import notify from "@/plugins/notification";
+import firebase from "@/plugins/firebase";
 
 Vue.config.productionTip = false;
 Vue.use(notify, store);
+Vue.use(firebase);
 
 new Vue({
   router,
