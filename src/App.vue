@@ -3,7 +3,7 @@
     <CAppBar />
     <v-main>
       <router-view />
-      <Notification />
+      <CNotification />
     </v-main>
   </v-app>
 </template>

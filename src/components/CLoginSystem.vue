@@ -83,6 +83,7 @@ export default class CLoginSystem extends Vue {
         this.$notify.error(message);
       } else {
         this.$notify.success(message);
+        this.showRegister = false;
       }
     }
   }
