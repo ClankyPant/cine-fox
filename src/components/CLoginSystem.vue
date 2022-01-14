@@ -5,17 +5,17 @@
       </v-img>
     </v-card-text>
 
-    <Login v-model="userLogin" v-if="isntRegister" />
+    <CLogin v-model="userLogin" v-if="isntRegister" />
 
-    <Register v-model="userRegistration" v-if="isRegister" />
+    <CRegister v-model="userRegistration" v-if="isRegister" />
 
     <v-card-actions>
-      <Button v-if="isntRegister" @click="signIn()" title="Entrar" />
-      <Button
+      <CButton v-if="isntRegister" @click="signIn()" title="Entrar" />
+      <CButton
         @click="registerControlling()"
         :title="isntRegister ? 'Cadastrar - se' : 'Registrar - se'"
       />
-      <Button v-if="isRegister" @click="showRegister = false" title="Voltar" />
+      <CButton v-if="isRegister" @click="showRegister = false" title="Voltar" />
     </v-card-actions>
   </v-card>
 </template>
@@ -30,13 +30,13 @@ import { Component, Vue } from "vue-property-decorator";
 
 import { VuexCommitNameEnum } from "@/enums/Vuex";
 
-import Button from "@/components/forms/Button.vue";
-import TextField from "@/components/forms/TextField.vue";
-import Login from "@/components/loginSystem/Login.vue";
-import Register from "@/components/loginSystem/Register.vue";
+import CButton from "@/components/forms/CButton.vue";
+import CTextField from "@/components/forms/CTextField.vue";
+import CLogin from "@/components/loginSystem/CLogin.vue";
+import CRegister from "@/components/loginSystem/CRegister.vue";
 
-@Component({ components: { TextField, Button, Login, Register } })
-export default class LoginSystem extends Vue {
+@Component({ components: { CTextField, CButton, CLogin, CRegister } })
+export default class CLoginSystem extends Vue {
   userLogin: UserModel = new UserModel("", "", "");
   userRegistration: UserModel = new UserModel("", "", "");
 

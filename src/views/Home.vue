@@ -8,7 +8,7 @@
     <v-container fill-height>
       <v-row justify="center">
         <v-col cols="12" sm="6" md="6" lg="4">
-          <LoginSystem />
+          <CLoginSystem />
         </v-col>
       </v-row>
     </v-container>
@@ -17,8 +17,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import LoginSystem from "@/components/LoginSystem.vue";
+import CLoginSystem from "@/components/CLoginSystem.vue";
 
-@Component({ components: { LoginSystem } })
+@Component({ components: { CLoginSystem } })
 export default class HomeView extends Vue {}
 </script>

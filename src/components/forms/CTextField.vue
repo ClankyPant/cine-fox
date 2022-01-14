@@ -12,7 +12,7 @@
 import { Component, Prop, VModel, Vue } from "vue-property-decorator";
 
 @Component({})
-export default class TextField extends Vue {
+export default class CTextField extends Vue {
   @VModel()
   valueModel!: string;
 

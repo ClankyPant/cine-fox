@@ -1,23 +1,23 @@
 <template>
   <v-app-bar app v-if="showAppBar" dark color="primary">
-    <Button title="Inicio" />
-    <Button title="Loja" />
-    <Button title="Meus filmes" />
+    <CButton title="Inicio" />
+    <CButton title="Loja" />
+    <CButton title="Meus filmes" />
 
     <v-spacer></v-spacer>
 
-    <Button title="Conta" />
-    <Button @click="logOff()" title="Sair" />
+    <CButton title="Conta" />
+    <CButton @click="logOff()" title="Sair" />
   </v-app-bar>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Button from "@/components/forms/Button.vue";
+import CButton from "@/components/forms/CButton.vue";
 import { VuexCommitNameEnum } from "@/enums/Vuex";
 
-@Component({ components: { Button } })
-export default class AppBar extends Vue {
+@Component({ components: { CButton } })
+export default class CAppBar extends Vue {
   get showAppBar(): boolean {
     return this.$store.getters.isLoggedIn;
   }

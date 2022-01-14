@@ -3,21 +3,14 @@
     <v-card-text>
       <v-row justify="center">
         <v-col cols="8">
-          <TextField v-model="user.name" label="Nome" />
+          <CTextField v-model="user.email" label="E-mail" />
         </v-col>
       </v-row>
     </v-card-text>
     <v-card-text>
       <v-row justify="center">
         <v-col cols="8">
-          <TextField v-model="user.email" label="E-mail" />
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <v-card-text>
-      <v-row justify="center">
-        <v-col cols="8">
-          <TextField v-model="user.password" type="password" label="Senha" />
+          <CTextField v-model="user.password" type="password" label="Senha" />
         </v-col>
       </v-row>
     </v-card-text>
@@ -26,12 +19,13 @@
 
 <script lang="ts">
 import UserModel from "@/models/UserModel";
-import TextField from "@/components/forms/TextField.vue";
+
+import CTextField from "@/components/forms/CTextField.vue";
 
 import { Component, VModel, Vue } from "vue-property-decorator";
 
-@Component({ components: { TextField } })
-export default class Register extends Vue {
+@Component({ components: { CTextField } })
+export default class CLogin extends Vue {
   @VModel()
   user!: UserModel;
 }
