@@ -7,20 +7,20 @@
     <v-card-text>
       <v-row justify="center">
         <v-col cols="8">
-          <TextField v-model="user" label="Login" />
+          <TextField v-model="user.email" label="e-mail" />
         </v-col>
       </v-row>
     </v-card-text>
     <v-card-text>
       <v-row justify="center">
         <v-col cols="8">
-          <TextField v-model="password" type="password" label="Senha" />
+          <TextField v-model="user.password" type="password" label="Senha" />
         </v-col>
       </v-row>
     </v-card-text>
     <v-card-actions>
       <Button @click="login()" title="Entrar" />
-      <Button title="Registrar-se" />
+      <Button @click="register()" title="Registrar - se" />
     </v-card-actions>
   </v-card>
 </template>
@@ -31,42 +31,39 @@ import { Component, Vue } from "vue-property-decorator";
 import Button from "@/components/forms/Button.vue";
 import TextField from "@/components/forms/TextField.vue";
 import { VuexCommitName } from "@/enums/VuexCommitName";
+import UserModel from "@/models/UserModel";
 
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import FireBaseService from "@/services/FireBase";
+import ResultRequest from "@/models/RequestError";
 
 @Component({ components: { TextField, Button } })
 export default class Login extends Vue {
-  user = "";
-  password = "";
+  user: UserModel = new UserModel("", "");
 
   async login(): Promise<void> {
-    const firebaseConfig = {
-      apiKey: "AIzaSyBiXUVteCVs-FLwJ639dN_9EuJX_CBOglw",
-      authDomain: "cine-fox-project.firebaseapp.com",
-      projectId: "cine-fox-project",
-      storageBucket: "cine-fox-project.appspot.com",
-      messagingSenderId: "991842991079",
-      appId: "1:991842991079:web:fdb6345a327ec66a1b9b42",
-      measurementId: "G-VB6D49T5E6",
-    };
+    const fireBaseService = new FireBaseService();
+    fireBaseService.signIn(this.user);
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const usuarios = collection(db, "usuario");
-    const t = await getDocs(usuarios);
-    const cityList = t.docs.map((doc) => doc.data());
-
-    console.log(cityList);
-
-    if (this.user === "luis") {
+    if (this.user.email === "luis") {
       this.$store.commit(VuexCommitName.LOG_IN);
-      this.$router.push("/main");
       this.$notify.success("Logado com sucesso!");
+
+      this.$router.push("/main");
     } else {
       this.$notify.error("Login não encontrado!");
+    }
+  }
+
+  async register(): Promise<void> {
+    const fireBaseService = new FireBaseService();
+    const resultRequest: ResultRequest<void> =
+      await fireBaseService.createNewAccount(this.user);
+
+    const message = resultRequest.message;
+    if (resultRequest.error) {
+      this.$notify.error(message);
+    } else {
+      this.$notify.success(message);
     }
   }
 }
