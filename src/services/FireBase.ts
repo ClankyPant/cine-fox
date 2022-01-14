@@ -11,8 +11,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import UserModel from "@/models/UserModel";
-import ResultRequest from "@/models/RequestError";
+import {MUser} from "@/models/MUser";
+import { MResultRequest } from "@/models/MResultRequest";
 import IUserCredential from "@/interface/IUserCredential";
 
 const FIRE_BASE_CONFIG = {
@@ -36,8 +36,8 @@ export default class FireBaseService {
     return getFirestore(this.fireBaseApp);
   }
 
-  async signIn(userParam: UserModel): Promise<ResultRequest<string>> {
-    const result: ResultRequest<string> = new ResultRequest("");
+  async signIn(userParam: MUser): Promise<MResultRequest<string>> {
+    const result: MResultRequest<string> = new MResultRequest("");
 
     try {
       const fireAuth = getAuth();
@@ -61,8 +61,8 @@ export default class FireBaseService {
     return result;
   }
 
-  async createNewAccount(user: UserModel): Promise<ResultRequest<void>> {
-    const result: ResultRequest<void> = new ResultRequest("");
+  async createNewAccount(user: MUser): Promise<MResultRequest<void>> {
+    const result: MResultRequest<void> = new MResultRequest("");
 
     try {
       const auth = getAuth();
@@ -78,8 +78,8 @@ export default class FireBaseService {
     return result;
   }
 
-  async getAllDocs<T>(collectionName: string): Promise<ResultRequest<T>> {
-    const result = new ResultRequest<T>("");
+  async getAllDocs<T>(collectionName: string): Promise<MResultRequest<T>> {
+    const result = new MResultRequest<T>("");
 
     const db: Firestore = this.getDb();
 
@@ -90,8 +90,8 @@ export default class FireBaseService {
     return result;
   }
 
-  async addDoc<T>(collectionName: string, doc: T): Promise<ResultRequest<T>> {
-    const result = new ResultRequest<T>("");
+  async addDoc<T>(collectionName: string, doc: T): Promise<MResultRequest<T>> {
+    const result = new MResultRequest<T>("");
 
     try {
       const db: Firestore = this.getDb();

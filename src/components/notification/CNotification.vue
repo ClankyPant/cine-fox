@@ -19,12 +19,12 @@
 </template>
 
 <script lang="ts">
-import NotificationModel from "@/models/notification/NotificationModel";
+import { MNotification } from "@/models/notification/MNotification";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({})
-export default class Notification extends Vue {
-  get notifications(): Array<NotificationModel> {
+export default class CNotification extends Vue {
+  get notifications(): Array<MNotification> {
     return this.$notify.notifications();
   }
 }

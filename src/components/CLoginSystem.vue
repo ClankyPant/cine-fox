@@ -21,8 +21,8 @@
 </template>
 
 <script lang="ts">
-import UserModel from "@/models/UserModel";
-import ResultRequest from "@/models/RequestError";
+import { MUser } from "@/models/MUser";
+import { MResultRequest } from "@/models/MResultRequest";
 
 import FireBaseService from "@/services/FireBase";
 
@@ -37,8 +37,8 @@ import CRegister from "@/components/loginSystem/CRegister.vue";
 
 @Component({ components: { CTextField, CButton, CLogin, CRegister } })
 export default class CLoginSystem extends Vue {
-  userLogin: UserModel = new UserModel("", "", "");
-  userRegistration: UserModel = new UserModel("", "", "");
+  userLogin = new MUser("", "", "");
+  userRegistration = new MUser("", "", "");
 
   showRegister = false;
 
@@ -55,7 +55,7 @@ export default class CLoginSystem extends Vue {
   }
 
   async signIn(): Promise<void> {
-    const result: ResultRequest<string> = await this.$firebase.signIn(
+    const result: MResultRequest<string> = await this.$firebase.signIn(
       this.userLogin
     );
 
@@ -75,7 +75,7 @@ export default class CLoginSystem extends Vue {
       this.showRegister = true;
     } else {
       const fireBaseService = new FireBaseService();
-      const resultRequest: ResultRequest<void> =
+      const resultRequest: MResultRequest<void> =
         await fireBaseService.createNewAccount(this.userRegistration);
 
       const message = resultRequest.message;

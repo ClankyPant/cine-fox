@@ -9,11 +9,11 @@
 </template>
 
 <script lang="ts">
-import Notification from "@/components/notification/Notification.vue";
+import CNotification from "@/components/notification/CNotification.vue";
 import CAppBar from "@/components/CAppBar.vue";
 
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({ components: { Notification, CAppBar } })
+@Component({ components: { CNotification, CAppBar } })
 export default class Login extends Vue {}
 </script>

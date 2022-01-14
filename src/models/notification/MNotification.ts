@@ -1,6 +1,6 @@
 import { NotificationTypeEnum } from "@/enums/Notification";
 
-export default class NotificationModel {
+export class MNotification {
   message: string;
   active: boolean;
   type: NotificationTypeEnum;

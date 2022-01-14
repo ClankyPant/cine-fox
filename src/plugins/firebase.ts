@@ -1,6 +1,6 @@
 import { VueConstructor } from "vue";
-import UserModel from "@/models/UserModel";
-import ResultRequest from "@/models/RequestError";
+import { MUser } from "@/models/MUser";
+import { MResultRequest } from "@/models/MResultRequest";
 import FireBase from "@/services/FireBase";
 
 declare module "vue/types/vue" {
@@ -14,7 +14,7 @@ declare module "vue/types/vue" {
 }
 
 interface IFirebase {
-  signIn(userParam: UserModel): Promise<ResultRequest<string>>;
+  signIn(userParam: MUser): Promise<MResultRequest<string>>;
 }
 
 const plugin = {

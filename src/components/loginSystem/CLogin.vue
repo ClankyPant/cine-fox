@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import UserModel from "@/models/UserModel";
+import {MUser} from "@/models/MUser";
 
 import CTextField from "@/components/forms/CTextField.vue";
 
@@ -27,6 +27,6 @@ import { Component, VModel, Vue } from "vue-property-decorator";
 @Component({ components: { CTextField } })
 export default class CLogin extends Vue {
   @VModel()
-  user!: UserModel;
+  user!: MUser;
 }
 </script>

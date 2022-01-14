@@ -1,6 +1,6 @@
 import { NotificationTypeEnum } from "@/enums/Notification";
 import { VuexCommitNameEnum } from "@/enums/Vuex";
-import NotificationModel from "@/models/notification/NotificationModel";
+import { MNotification } from "@/models/notification/MNotification";
 import { VueConstructor } from "vue";
 import { Store } from "vuex";
 
@@ -19,7 +19,7 @@ interface INotification {
   success(text: string): void;
   error(text: string): void;
   warning(text: string): void;
-  notifications(): Array<NotificationModel>;
+  notifications(): Array<MNotification>;
 }
 
 const plugin = {
@@ -39,16 +39,19 @@ const plugin = {
       warning: (text: string) => {
         commitStore(text, store, NotificationTypeEnum.WARNING);
       },
-      notifications: (): Array<NotificationModel> =>
-        store.getters.getNotifications,
+      notifications: (): Array<MNotification> => store.getters.getNotifications,
     };
   },
 };
 
-function commitStore(text: string, store: Store<unknown>, notificationType: NotificationTypeEnum): void {
+function commitStore(
+  text: string,
+  store: Store<unknown>,
+  notificationType: NotificationTypeEnum
+): void {
   store.commit(
     VuexCommitNameEnum.ADD_NOTIFICATION,
-    new NotificationModel(text, notificationType)
+    new MNotification(text, notificationType)
   );
 }
 

@@ -1,4 +1,4 @@
-export default class ResultRequest<T> {
+export class MResultRequest<T> {
   message: string;
   error: boolean;
   data!: T | Array<T>;
