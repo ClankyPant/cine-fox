@@ -15,24 +15,27 @@
         @click="registerControlling()"
         :title="isntRegister ? 'Cadastrar - se' : 'Registrar - se'"
       />
-      <CButton v-if="isRegister" @click="showRegister = false" title="Voltar" />
+      <CButton v-if="isRegister" @click="changeTabs()" title="Voltar" />
     </v-card-actions>
   </v-card>
 </template>
 
 <script lang="ts">
 import { MUser } from "@/models/MUser";
-import { MResultRequest } from "@/models/MResultRequest";
 
 import { Component, Vue } from "vue-property-decorator";
 
-import { VuexCommitNameEnum } from "@/enums/Vuex";
+import { MResultRequest } from "@/models/MResultRequest";
+
+import IUserCredential from "@/interface/IUserCredential";
 
 import CButton from "@/components/forms/CButton.vue";
-import CTextField from "@/components/forms/CTextField.vue";
 import CLogin from "@/components/loginSystem/CLogin.vue";
+import CTextField from "@/components/forms/CTextField.vue";
 import CRegister from "@/components/loginSystem/CRegister.vue";
-import IUserCredential from "@/interface/IUserCredential";
+
+import { VuexCommitNameEnum } from "@/enums/Vuex";
+import { FirebaseCollectionEnum } from "@/enums/FirebaseCollection";
 
 @Component({ components: { CTextField, CButton, CLogin, CRegister } })
 export default class CLoginSystem extends Vue {
@@ -50,10 +53,13 @@ export default class CLoginSystem extends Vue {
   }
 
   changeTabs(): void {
+    this.userLogin = new MUser("", "", "");
+    this.userRegistration = new MUser("", "", "");
+
     this.showRegister = !this.showRegister;
   }
 
-  async signIn(): Promise<void> {
+  async signIn(showMesage = true): Promise<void> {
     const RESULT_REQUEST: MResultRequest<IUserCredential> =
       await this.$firebase.signIn(this.userLogin);
 
@@ -65,7 +71,9 @@ export default class CLoginSystem extends Vue {
 
     if (API_KEY && USER_UID) {
       this.$store.commit(VuexCommitNameEnum.LOG_IN, INTERFACE_USER_CREDENCIAL);
-      this.$notify.success("Logado com sucesso!");
+      if (showMesage) {
+        this.$notify.success("Logado com sucesso!");
+      }
 
       this.$router.push("/main");
     } else {
@@ -82,15 +90,42 @@ export default class CLoginSystem extends Vue {
   }
 
   async register(): Promise<void> {
-    const resultRequest: MResultRequest<void> =
-      await this.$firebase.createNewAccount(this.userRegistration);
+    let LOADER = this.$loading.show();
 
-    const message = resultRequest.message;
-    if (resultRequest.error) {
-      this.$notify.error(message);
-    } else {
-      this.$notify.success(message);
-      this.showRegister = false;
+    try {
+      const RESULT_REQUEST: MResultRequest<IUserCredential> =
+        await this.$firebase.createNewAccount(this.userRegistration);
+
+      const RESULT_REQUEST_MESSAGE = RESULT_REQUEST.message;
+      const USER_CREDENCIAL: IUserCredential =
+        RESULT_REQUEST.data as IUserCredential;
+
+      if (RESULT_REQUEST.error) {
+        this.$notify.error(RESULT_REQUEST_MESSAGE);
+      } else {
+        this.userLogin = new MUser(
+          this.userRegistration.name,
+          this.userRegistration.email,
+          this.userRegistration.password
+        );
+
+        this.$firebase.setDoc(
+          FirebaseCollectionEnum.USER,
+          {
+            name: this.userLogin.name,
+            email: this.userLogin.email,
+          },
+          USER_CREDENCIAL.user.uid
+        );
+
+        await this.signIn(false);
+
+        this.showRegister = false;
+        this.$notify.success(RESULT_REQUEST_MESSAGE);
+        this.userRegistration = new MUser("", "", "");
+      }
+    } finally {
+      LOADER.hide();
     }
   }
 }

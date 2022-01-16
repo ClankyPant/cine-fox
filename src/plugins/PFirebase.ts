@@ -19,7 +19,12 @@ declare module "vue/types/vue" {
 
 interface IFirebase {
   signIn(userParam: MUser): Promise<MResultRequest<IUserCredential>>;
-  createNewAccount(user: MUser): Promise<MResultRequest<void>>;
+  createNewAccount(user: MUser): Promise<MResultRequest<IUserCredential>>;
+  setDoc<T>(
+    collectionParam: string,
+    docParam: T,
+    docIdParam: string
+  ): Promise<MResultRequest<T>>;
 }
 
 const plugin = {

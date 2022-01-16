@@ -1,6 +1,8 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
 import {
+  doc,
   addDoc,
+  setDoc,
   getDocs,
   Firestore,
   collection,
@@ -61,14 +63,24 @@ export class SFirebase {
     return result;
   }
 
-  async createNewAccount(user: MUser): Promise<MResultRequest<void>> {
-    const result: MResultRequest<void> = new MResultRequest("");
+  async createNewAccount(
+    user: MUser
+  ): Promise<MResultRequest<IUserCredential>> {
+    const result: MResultRequest<IUserCredential> = new MResultRequest("");
 
     try {
       const auth = getAuth();
-      await createUserWithEmailAndPassword(auth, user.email, user.password);
+      const FIRE_USER_CREDENCIAL = await createUserWithEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
 
+      const INTERFACE_USER_CREDENCIAL: IUserCredential = JSON.parse(
+        JSON.stringify(FIRE_USER_CREDENCIAL)
+      );
       result.message = "Registrado com sucesso!";
+      result.data = INTERFACE_USER_CREDENCIAL;
     } catch (error) {
       const err = error as Error;
       result.message = err.message;
@@ -98,6 +110,28 @@ export class SFirebase {
       await addDoc(
         collection(db, collectionName),
         JSON.parse(JSON.stringify(doc))
+      );
+    } catch (error) {
+      const err = error as Error;
+      result.message = err.message;
+      result.error = true;
+    }
+
+    return result;
+  }
+
+  async setDoc<T>(
+    collectionParam: string,
+    docParam: T,
+    docIdParam: string
+  ): Promise<MResultRequest<T>> {
+    const result = new MResultRequest<T>("");
+
+    try {
+      const db: Firestore = this.getDb();
+      await setDoc(
+        doc(db, collectionParam, docIdParam),
+        JSON.parse(JSON.stringify(docParam))
       );
     } catch (error) {
       const err = error as Error;
