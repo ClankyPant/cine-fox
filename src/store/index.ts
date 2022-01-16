@@ -1,8 +1,12 @@
-import { LocalStorageItemEnum } from "../enums/LocalStorage";
-import { MNotification } from "@/models/notification/MNotification";
-import { MState } from "@/models/store/MState";
 import Vue from "vue";
 import Vuex from "vuex";
+
+import IUserCredential from "@/interface/IUserCredential";
+
+import { LocalStorageItemEnum } from "../enums/LocalStorage";
+
+import { MState } from "@/models/store/MState";
+import { MNotification } from "@/models/notification/MNotification";
 
 Vue.use(Vuex);
 
@@ -12,15 +16,22 @@ export default new Vuex.Store({
     addNotification(state: MState, notification: MNotification): void {
       state.notifications.push(notification);
     },
-    logIn(state: MState): void {
+    logIn(state: MState, userCredencial: IUserCredential): void {
       localStorage.setItem(
         LocalStorageItemEnum.API_KEY,
-        "8129ndsajdnsua-dksnduias-jfjn"
+        userCredencial.user.apiKey
       );
+
+      localStorage.setItem(
+        LocalStorageItemEnum.USER_UID,
+        userCredencial.user.uid
+      );
+
       state.loginStatus = true;
     },
     logOff(state: MState): void {
       localStorage.removeItem(LocalStorageItemEnum.API_KEY);
+      localStorage.removeItem(LocalStorageItemEnum.USER_UID);
       state.loginStatus = false;
     },
   },

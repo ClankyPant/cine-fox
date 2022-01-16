@@ -24,8 +24,6 @@
 import { MUser } from "@/models/MUser";
 import { MResultRequest } from "@/models/MResultRequest";
 
-import { SFirebase } from "@/services/SFirebase";
-
 import { Component, Vue } from "vue-property-decorator";
 
 import { VuexCommitNameEnum } from "@/enums/Vuex";
@@ -34,6 +32,7 @@ import CButton from "@/components/forms/CButton.vue";
 import CTextField from "@/components/forms/CTextField.vue";
 import CLogin from "@/components/loginSystem/CLogin.vue";
 import CRegister from "@/components/loginSystem/CRegister.vue";
+import IUserCredential from "@/interface/IUserCredential";
 
 @Component({ components: { CTextField, CButton, CLogin, CRegister } })
 export default class CLoginSystem extends Vue {
@@ -55,13 +54,17 @@ export default class CLoginSystem extends Vue {
   }
 
   async signIn(): Promise<void> {
-    const result: MResultRequest<string> = await this.$firebase.signIn(
-      this.userLogin
-    );
+    const RESULT_REQUEST: MResultRequest<IUserCredential> =
+      await this.$firebase.signIn(this.userLogin);
 
-    const token = result.data;
-    if (token) {
-      this.$store.commit(VuexCommitNameEnum.LOG_IN);
+    const INTERFACE_USER_CREDENCIAL: IUserCredential =
+      RESULT_REQUEST.data as IUserCredential;
+
+    const API_KEY = INTERFACE_USER_CREDENCIAL.user.apiKey;
+    const USER_UID = INTERFACE_USER_CREDENCIAL.user.uid;
+
+    if (API_KEY && USER_UID) {
+      this.$store.commit(VuexCommitNameEnum.LOG_IN, INTERFACE_USER_CREDENCIAL);
       this.$notify.success("Logado com sucesso!");
 
       this.$router.push("/main");
@@ -74,17 +77,20 @@ export default class CLoginSystem extends Vue {
     if (this.showRegister == false) {
       this.showRegister = true;
     } else {
-      const fireBaseService = new SFirebase();
-      const resultRequest: MResultRequest<void> =
-        await fireBaseService.createNewAccount(this.userRegistration);
+      this.register();
+    }
+  }
 
-      const message = resultRequest.message;
-      if (resultRequest.error) {
-        this.$notify.error(message);
-      } else {
-        this.$notify.success(message);
-        this.showRegister = false;
-      }
+  async register(): Promise<void> {
+    const resultRequest: MResultRequest<void> =
+      await this.$firebase.createNewAccount(this.userRegistration);
+
+    const message = resultRequest.message;
+    if (resultRequest.error) {
+      this.$notify.error(message);
+    } else {
+      this.$notify.success(message);
+      this.showRegister = false;
     }
   }
 }

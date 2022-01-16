@@ -1,7 +1,11 @@
 import { VueConstructor } from "vue";
+
+import { SFirebase } from "@/services/SFirebase";
+
 import { MUser } from "@/models/MUser";
 import { MResultRequest } from "@/models/MResultRequest";
-import { SFirebase } from "@/services/SFirebase";
+
+import IUserCredential from "@/interface/IUserCredential";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -14,7 +18,8 @@ declare module "vue/types/vue" {
 }
 
 interface IFirebase {
-  signIn(userParam: MUser): Promise<MResultRequest<string>>;
+  signIn(userParam: MUser): Promise<MResultRequest<IUserCredential>>;
+  createNewAccount(user: MUser): Promise<MResultRequest<void>>;
 }
 
 const plugin = {

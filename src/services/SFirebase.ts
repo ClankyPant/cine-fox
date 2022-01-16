@@ -36,25 +36,25 @@ export class SFirebase {
     return getFirestore(this.fireBaseApp);
   }
 
-  async signIn(userParam: MUser): Promise<MResultRequest<string>> {
-    const result: MResultRequest<string> = new MResultRequest("");
+  async signIn(userParam: MUser): Promise<MResultRequest<IUserCredential>> {
+    const result: MResultRequest<IUserCredential> = new MResultRequest("");
 
     try {
-      const fireAuth = getAuth();
-      const fireUser = await signInWithEmailAndPassword(
-        fireAuth,
+      const FIRE_AUTH = getAuth();
+      const FIRE_USER_CREDENCIAL = await signInWithEmailAndPassword(
+        FIRE_AUTH,
         userParam.email,
         userParam.password
       );
 
-      const userCredencials: IUserCredential = JSON.parse(
-        JSON.stringify(fireUser)
+      const INTERFACE_USER_CREDENCIAL: IUserCredential = JSON.parse(
+        JSON.stringify(FIRE_USER_CREDENCIAL)
       );
       result.message = "Logado com sucesso!";
-      result.data = userCredencials.user.apiKey;
+      result.data = INTERFACE_USER_CREDENCIAL;
     } catch (error) {
-      const e = error as Error;
-      result.message = e.message;
+      const ERROR = error as Error;
+      result.message = ERROR.message;
       result.error = true;
     }
 
